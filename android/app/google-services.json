@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1001311430575",
+    "project_id": "food-delivery-cedee",
+    "storage_bucket": "food-delivery-cedee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001311430575:android:dbd6e61949e14f8017f15a",
+        "android_client_info": {
+          "package_name": "com.food_delivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXf2nAx1orsf5DbmyHkNlZ3r9D4xbtJjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

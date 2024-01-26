@@ -21,10 +21,6 @@ const SliderPage3 = (props) => {
         </View>
       </View>
       <View style={styles.view_second}>
-        {/* <View style={styles.rectangle}>
-          <Text>Hii</Text>
-        </View> */}
-
         <View>
           <Image source={back} style={styles.back_style} />
           <Text style={styles.welcome}>Quality Food</Text>
@@ -77,7 +73,6 @@ const styles = StyleSheet.create({
     width: 340,
     bottom: 330,
     marginLeft: 60,
-    fontWeight: 'bold',
   },
   view_second: {
     height: 400,

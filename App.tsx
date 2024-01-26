@@ -1,4 +1,3 @@
-import {View} from 'react-native';
 import React from 'react';
 import Main_page from './components/landing_page/Main_page';
 import SliderPage from './components/landing_page/SliderPage';
@@ -9,6 +8,7 @@ import SliderPage3 from './components/landing_page/SliderPage3';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login_page from './components/login_signup/Login_page';
+import ForgotPassword from './components/login_signup/ForgotPassword';
 
 const Stack = createNativeStackNavigator();
 export default function App(): React.JSX.Element {
@@ -18,6 +18,8 @@ export default function App(): React.JSX.Element {
       {/* <SliderPage /> */}
       {/* <SliderPage2 /> */}
       {/* <SliderPage3 /> */}
+      {/* <Login_page /> */}
+      {/* <ForgotPassword /> */}
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="Home" component={Main_page} />
@@ -25,6 +27,7 @@ export default function App(): React.JSX.Element {
         <Stack.Screen name="SliderPage2" component={SliderPage2} />
         <Stack.Screen name="SliderPage3" component={SliderPage3} />
         <Stack.Screen name="Login" component={Login_page} />
+        <Stack.Screen name="ForgortPassword" component={ForgotPassword} />
       </Stack.Navigator>
     </NavigationContainer>
     </>
