@@ -1,10 +1,10 @@
-//import React from 'react';
-import {StyleSheet, View, Image, Text, Pressable} from 'react-native';
+import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
+import React from 'react';
 const ellipse = require('../images/ellipse1.png');
 const ellipse2 = require('../images/ellipse2.png');
-const youngpeople = require('../images/young-people-students.png');
+const sitting_together = require('../images/sitting_together.png');
 const back = require('../images/back.png');
-const SliderPage = (props) => {
+const SliderPage3 = (props) => {
   return (
     <View style={styles.mainContainer}>
       <View style={styles.main_view}>
@@ -16,7 +16,7 @@ const SliderPage = (props) => {
             <Image source={ellipse} style={styles.circle_1} />
           </View>
           <View>
-            <Image source={youngpeople} style={styles.young} />
+            <Image source={sitting_together} style={styles.young} />
           </View>
         </View>
       </View>
@@ -27,17 +27,16 @@ const SliderPage = (props) => {
 
         <View>
           <Image source={back} style={styles.back_style} />
-          <Text style={styles.welcome}>Welcome to WaraChow</Text>
+          <Text style={styles.welcome}>Quality Food</Text>
           <Text style={styles.describe}>
             Order the best meals in Lagos and have them delivered to your
-            doorstep in little or no time. Doesn t that sound delicious???
+            doorstep in little or no time. Doesn’t that sound delicious???
           </Text>
-          <Pressable
-            style={styles.pressable}
-            onPress={() => {
-              props.navigation.navigate('SliderPage2');
-            }}>
-            <Text style={styles.next}>Next</Text>
+          <Pressable style={styles.pressable}
+          onPress={() => {
+            props.navigation.navigate('Login');
+          }}>
+            <Text style={styles.next}>Login/Signp</Text>
           </Pressable>
         </View>
       </View>
@@ -45,7 +44,7 @@ const SliderPage = (props) => {
   );
 };
 
-export default SliderPage;
+export default SliderPage3;
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -66,8 +65,8 @@ const styles = StyleSheet.create({
     top: 30,
   },
   circle_2: {
-    marginTop: 83,
-    marginLeft: 200,
+    marginTop: 120,
+    marginLeft: 170,
     width: 189,
     height: 191,
     flexShrink: 0,
@@ -75,9 +74,10 @@ const styles = StyleSheet.create({
   },
   young: {
     height: 430,
-    width: 250,
+    width: 340,
     bottom: 330,
-    marginLeft: 80,
+    marginLeft: 60,
+    fontWeight: 'bold',
   },
   view_second: {
     height: 400,

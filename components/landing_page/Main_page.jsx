@@ -1,9 +1,9 @@
-import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Image, Pressable, TouchableOpacity} from 'react-native';
 import React from 'react';
 const pic = require('../images/logo.png');
 const pics = require('../images/toy_faces_1.png');
 const picss = require('../images/toy_faces_2.png');
-const Main_page = () => {
+const Main_page = (props) => {
   return (
     <View style={{backgroundColor: '#FF4B3A', flex: 1}}>
       <View
@@ -29,13 +29,13 @@ const Main_page = () => {
       <Image source={pics} style={styles.img} />
       <Image source={picss} style={styles.imgs} />
       <View style={styles.button_container}>
-        <Pressable
+        <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            main_screen;
+            props.navigation.navigate("SliderPage")
           }}>
           <Text style={styles.text}>GET STARTED</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </View>
   )
