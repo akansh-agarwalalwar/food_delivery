@@ -88,13 +88,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
   },
-  // rectangle:{
-  //   height:110,
-  //   width:4,
-  //   color:'#0F0F0F',
-  //   borderRadius:14,
-
-  // },
   welcome: {
     color: '#FA4A0C',
     textAlign: 'center',

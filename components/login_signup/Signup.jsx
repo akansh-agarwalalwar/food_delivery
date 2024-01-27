@@ -1,48 +1,39 @@
-import {Pressable, StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Pressable, Image} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-paper';
-import CheckBox from '@react-native-community/checkbox';
+
 import auth from '@react-native-firebase/auth';
-import { useNavigation } from '@react-navigation/native';
-
-const Login_page = props => {
-  
-  const [text, setText] = useState('');
+import {useNavigation} from '@react-navigation/native';
+const Signup = props => {
+  const [email, setEmail] = useState('');
+  const [password, setpassword] = useState('');
+  const [userName, setUserName] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
-
-  const [isSelected, setSelection] = useState(false);
-
-  const [email, setEmail]  = useState('');
-  const [password, setpassword]  = useState('');
-  
-  const navigationLogin = useNavigation();
+  const navigationsignUp = useNavigation();
   const [message, setMessage] = useState('');
-  const handleLogin = async()=>{
+  const handlesignUp = async () => {
     try {
       // console.log("Email: ", email, "Password: ", password)
-      const isUserLogIn= await auth().signInWithEmailAndPassword(email,password);
-      console.log(isUserLogIn);
+      const isUserCreated = await auth().createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+      console.log(isUserCreated);
 
-      navigationLogin.navigate("Home Page", {
-        email: isUserLogIn.user.email,
-        uid : isUserLogIn.user.uid
-      });
-
+      navigationsignUp.navigate('Login');
     } catch (error) {
       console.log(error);
-      setMessage(error.message)
+      setMessage(error.message);
     }
-  }
+  };
 
   return (
     <View style={styles.login_main_view}>
       {/* <Text>{message}</Text> */}
       <View style={styles.login_main_view_second}>
         <View style={styles.upperLogin}>
-          <Text style={styles.login_text}>Log In</Text>
-          <Text style={styles.SignInText}>
-            Please sign in to your existing account
-          </Text>
+          <Text style={styles.login_text}>Sign Up</Text>
+          <Text style={styles.SignInText}>Please sign up to get started</Text>
         </View>
       </View>
       <View style={styles.secondView}>
@@ -54,10 +45,32 @@ const Login_page = props => {
               color: '#32343E',
               marginLeft: 5,
             }}>
+            Name
+          </Text>
+          <TextInput
+            placeholder="Name"
+            style={{
+              backgroundColor: '#F0F5FA',
+              borderRadius: 15,
+              marginTop: 9,
+              height: 62,
+              width: 327,
+            }}
+            value={userName}
+            onChangeText={value => setUserName(value)}
+          />
+          <Text
+            style={{
+              fontSize: 17,
+              fontWeight: '400',
+              color: '#32343E',
+              marginLeft: 5,
+              marginTop: 5,
+            }}>
             Email
           </Text>
           <TextInput
-            placeholder="Enter Your Email"
+            placeholder="Email"
             style={{
               backgroundColor: '#F0F5FA',
               borderRadius: 15,
@@ -73,17 +86,13 @@ const Login_page = props => {
               fontSize: 17,
               fontWeight: '400',
               color: '#32343E',
-              marginTop: 12,
+              marginTop: 5,
               marginLeft: 5,
             }}>
             Password
           </Text>
           <TextInput
-            placeholder="Enter Password"
-            // secureTextEntry={!showPassword}
-            //         value={password}
-            //         onChangeText={setPassword}
-
+            placeholder="Password"
             style={{
               backgroundColor: '#F0F5FA',
               borderRadius: 15,
@@ -97,47 +106,21 @@ const Login_page = props => {
             right={
               <TextInput.Icon
                 name={passwordVisible ? 'eye' : 'eye-off'}
-                onPress={() => setPasswordVisible(!passwordVisible)} 
-                style={{color:'black'}}
+                onPress={() => setPasswordVisible(!passwordVisible)}
+                style={{color: 'black'}}
               />
             }
           />
-
-          <View>
-            <CheckBox
-              value={isSelected}
-              onValueChange={setSelection}
-              style={styles.checkbox}
-            />
-            <View style={{marginTop:-25}}>
-            <Text style={{marginLeft: 33}}>Remember me</Text>
-            <Text
-              style={{
-                textAlign: 'right',
-                marginRight: 33,
-                marginTop: -18,
-                color: '#FF7622',
-                fontSize: 14,
-              }}
-              onPress={() => {
-                props.navigation.navigate('ForgortPassword');
-              }}>
-              Forgot Password
-            </Text></View>
-          </View>
+          <View></View>
           <Pressable
             style={styles.pressable}
             onPress={() => {
               // props.navigation.navigate('Home Page');
-              handleLogin()
+              handlesignUp();
             }}>
-            <Text style={styles.next}>LOG IN</Text>
+            <Text style={styles.next}>Sign Up</Text>
           </Pressable>
         </View>
-        <Text style={{color: '#646982', textAlign: 'center', marginTop: 12}}>
-          Don’t have an account? <Text style={{color: '#FF7622'}} onPress={()=> props.navigation.navigate("Sign Up")}>Sign Up</Text>
-        </Text>
-        <Text style={{textAlign: 'center', marginTop: 15}}>OR</Text>
         <View
           style={{
             justifyContent: 'space-between',
@@ -155,7 +138,7 @@ const Login_page = props => {
   );
 };
 
-export default Login_page;
+export default Signup;
 
 const styles = StyleSheet.create({
   login_main_view: {
