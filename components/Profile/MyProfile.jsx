@@ -1,47 +1,36 @@
-import {Image, StyleSheet, View, Text, ScrollView} from 'react-native';
+import {Image, StyleSheet, View, Text, ScrollView, Pressable} from 'react-native';
 import React from 'react';
-
-const MyProfile = () => {
+import ProfileCard from './ProfileCard';
+const MyProfile = props => {
   return (
-    <View style={{backgroundColor: '#FFF', flex: 1, marginBottom:35}}>
+    <View style={{backgroundColor: '#FFF', flex: 1, marginBottom: 35}}>
       <View style={{marginHorizontal: 20, marginVertical: 20}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Image source={require('../images/back2.png')} />
+          <Pressable onPress={() => props.navigation.navigate('Home Page')}>
+            <Image source={require('../images/back2.png')}/>
+        </Pressable>
           <Text style={{fontSize: 25, color: '#000', marginHorizontal: 16}}>
             Profile
           </Text>
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View style={{marginVertical: 30, flexDirection: 'row'}}>
-            <Image source={require('../images/Profile_background.png')} />
-            <View style={{marginHorizontal: 30}}>
-              <Text style={{color: '#32343E', fontSize: 30}}>User Name</Text>
-              <Text
-                style={{
-                  marginVertical: 10,
-                  letterSpacing: 1,
-                  fontSize: 22,
-                  fontWeight: '400',
-                  color: '#A0A5BA',
-                }}>
-                I Love Fast Food
-              </Text>
-            </View>
-          </View>
+          <ProfileCard />
           <View>
             {/* 
 =====================card first=============================== */}
             <View style={styles.card_styles}>
               <View style={{marginVertical: 10, marginHorizontal: 15}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  
                   <Image source={require('../images/personal_info.png')} />
                   <Text
                     style={{
                       fontSize: 24,
                       marginVertical: 10,
                       marginHorizontal: 10,
-                    }}>
+                    }}
+                    onPress={() => props.navigation.navigate('Personal Info')}>
                     Personal Info
                   </Text>
                   <Image
@@ -62,7 +51,7 @@ const MyProfile = () => {
                       fontSize: 24,
                       marginVertical: 10,
                       marginHorizontal: 10,
-                    }}>
+                    }} onPress={()=> props.navigation.navigate('My Address')}>
                     Address
                   </Text>
                   <Image
@@ -77,13 +66,14 @@ const MyProfile = () => {
             <View style={styles.card_styles}>
               <View style={{marginVertical: 10, marginHorizontal: 15}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Image source={require('../images/personal_info.png')} />
+                  <Image source={require('../images/cart2.png')} />
                   <Text
                     style={{
                       fontSize: 24,
                       marginVertical: 10,
                       marginHorizontal: 10,
-                    }}>
+                    }}
+                    onPress={()=>props.navigation.navigate('Cart')}>
                     Cart
                   </Text>
                   <Image
@@ -97,7 +87,7 @@ const MyProfile = () => {
                   />
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Image source={require('../images/address.png')} />
+                  <Image source={require('../images/favourite.png')} />
 
                   <Text
                     style={{
@@ -114,7 +104,7 @@ const MyProfile = () => {
                 </View>
 
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Image source={require('../images/address.png')} />
+                  <Image source={require('../images/notifications.png')} />
 
                   <Text
                     style={{
@@ -131,9 +121,10 @@ const MyProfile = () => {
                 </View>
 
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Image source={require('../images/address.png')} />
+                  <Image source={require('../images/payment_method.png')} />
 
                   <Text
+                  onPress={()=>props.navigation.navigate('Payment Method')}
                     style={{
                       fontSize: 24,
                       marginVertical: 10,
@@ -191,7 +182,7 @@ const MyProfile = () => {
                 </View>
 
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Image source={require('../images/address.png')} />
+                  <Image source={require('../images/settings.png')} />
 
                   <Text
                     style={{
@@ -208,12 +199,12 @@ const MyProfile = () => {
                 </View>
               </View>
             </View>
-{/* 
+            {/* 
 ========================card fourth==================== */}
             <View style={styles.card_styles}>
               <View style={{marginVertical: 10, marginHorizontal: 15}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Image source={require('../images/personal_info.png')} />
+                  <Image source={require('../images/logout.png')} />
                   <Text
                     style={{
                       fontSize: 24,

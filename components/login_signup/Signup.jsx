@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, Pressable, Image} from 'react-native';
+import {StyleSheet, Text, View, Pressable, Image, Alert} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-paper';
 
@@ -13,15 +13,21 @@ const Signup = props => {
   const [message, setMessage] = useState('');
   const handlesignUp = async () => {
     try {
+      if(email.length > 0 && password.length >0 ){
+        const isUserCreated = await auth().createUserWithEmailAndPassword(
+          email,
+          password,
+        );
+        console.log(isUserCreated);
+  
+        navigationsignUp.navigate('Login');
+      }
+      else{
+        
+      }
+      }
       // console.log("Email: ", email, "Password: ", password)
-      const isUserCreated = await auth().createUserWithEmailAndPassword(
-        email,
-        password,
-      );
-      console.log(isUserCreated);
-
-      navigationsignUp.navigate('Login');
-    } catch (error) {
+       catch (error) {
       console.log(error);
       setMessage(error.message);
     }

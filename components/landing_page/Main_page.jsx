@@ -5,7 +5,8 @@ const pics = require('../images/toy_faces_1.png');
 const picss = require('../images/toy_faces_2.png');
 const Main_page = (props) => {
   return (
-    <View style={{backgroundColor: '#FF4B3A', flex: 1}}>
+    <View style={{backgroundColor: '#FF4B3A', flex: 1, justifyContent:'space-between'}}>
+      <View>
       <View
         style={{
           width: 73,
@@ -36,6 +37,7 @@ const Main_page = (props) => {
           }}>
           <Text style={styles.text}>GET STARTED</Text>
         </TouchableOpacity>
+      </View>
       </View>
     </View>
   )

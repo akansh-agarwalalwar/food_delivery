@@ -19,16 +19,22 @@ const Login_page = props => {
   const [message, setMessage] = useState('');
   const handleLogin = async()=>{
     try {
+      if(email.length >0 && password.length>0){
+        const isUserLogIn= await auth().signInWithEmailAndPassword(email,password);
+        console.log(isUserLogIn);
+  
+        navigationLogin.navigate("My Profile", {
+          email: isUserLogIn.user.email,
+          uid : isUserLogIn.user.uid
+        });
+  
+      }
+      else{
+        
+      }
+      }
       // console.log("Email: ", email, "Password: ", password)
-      const isUserLogIn= await auth().signInWithEmailAndPassword(email,password);
-      console.log(isUserLogIn);
-
-      navigationLogin.navigate("Home Page", {
-        email: isUserLogIn.user.email,
-        uid : isUserLogIn.user.uid
-      });
-
-    } catch (error) {
+       catch (error) {
       console.log(error);
       setMessage(error.message)
     }

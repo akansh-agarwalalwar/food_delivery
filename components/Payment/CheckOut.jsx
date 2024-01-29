@@ -88,7 +88,9 @@ const CheckOut = props => {
             <Text style={{fontSize: 27, color: '#000'}}>23,000</Text>
           </View>
           <View style={{alignItems: 'center', marginVertical: 40}}>
-            <Pressable style={styles.pay_button}>
+            <Pressable
+              style={styles.pay_button}
+              onPress={() => props.navigation.navigate('Payment Successfull')}>
               <Text style={{color: '#FFF', fontSize: 20, fontWeight: 'bold'}}>
                 Pay
               </Text>
