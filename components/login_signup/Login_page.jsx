@@ -3,42 +3,36 @@ import React, {useState} from 'react';
 import {TextInput} from 'react-native-paper';
 import CheckBox from '@react-native-community/checkbox';
 import auth from '@react-native-firebase/auth';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const Login_page = props => {
-  
   const [text, setText] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   const [isSelected, setSelection] = useState(false);
 
-  const [email, setEmail]  = useState('');
-  const [password, setpassword]  = useState('');
-  
+  const [email, setEmail] = useState('');
+  const [password, setpassword] = useState('');
+
   const navigationLogin = useNavigation();
   const [message, setMessage] = useState('');
-  const handleLogin = async()=>{
+  const handleLogin = async () => {
     try {
-      if(email.length >0 && password.length>0){
-        const isUserLogIn= await auth().signInWithEmailAndPassword(email,password);
+      if (email.length > 0 && password.length > 0) {
+        const isUserLogIn = await auth().signInWithEmailAndPassword(
+          email,
+          password,
+        );
         console.log(isUserLogIn);
-  
-        navigationLogin.navigate("My Profile", {
-          email: isUserLogIn.user.email,
-          uid : isUserLogIn.user.uid
-        });
-  
+        navigationLogin.navigate('Home Page');
+      } else {
       }
-      else{
-        
-      }
-      }
+    } catch (error) {
       // console.log("Email: ", email, "Password: ", password)
-       catch (error) {
       console.log(error);
-      setMessage(error.message)
+      setMessage(error.message);
     }
-  }
+  };
 
   return (
     <View style={styles.login_main_view}>
@@ -103,8 +97,8 @@ const Login_page = props => {
             right={
               <TextInput.Icon
                 name={passwordVisible ? 'eye' : 'eye-off'}
-                onPress={() => setPasswordVisible(!passwordVisible)} 
-                style={{color:'black'}}
+                onPress={() => setPasswordVisible(!passwordVisible)}
+                style={{color: 'black'}}
               />
             }
           />
@@ -115,33 +109,39 @@ const Login_page = props => {
               onValueChange={setSelection}
               style={styles.checkbox}
             />
-            <View style={{marginTop:-25}}>
-            <Text style={{marginLeft: 33}}>Remember me</Text>
-            <Text
-              style={{
-                textAlign: 'right',
-                marginRight: 33,
-                marginTop: -18,
-                color: '#FF7622',
-                fontSize: 14,
-              }}
-              onPress={() => {
-                props.navigation.navigate('ForgortPassword');
-              }}>
-              Forgot Password
-            </Text></View>
+            <View style={{marginTop: -25}}>
+              <Text style={{marginLeft: 33}}>Remember me</Text>
+              <Text
+                style={{
+                  textAlign: 'right',
+                  marginRight: 33,
+                  marginTop: -18,
+                  color: '#FF7622',
+                  fontSize: 14,
+                }}
+                onPress={() => {
+                  props.navigation.navigate('ForgortPassword');
+                }}>
+                Forgot Password
+              </Text>
+            </View>
           </View>
           <Pressable
             style={styles.pressable}
             onPress={() => {
               // props.navigation.navigate('Home Page');
-              handleLogin()
+              handleLogin();
             }}>
             <Text style={styles.next}>LOG IN</Text>
           </Pressable>
         </View>
         <Text style={{color: '#646982', textAlign: 'center', marginTop: 12}}>
-          Don’t have an account? <Text style={{color: '#FF7622'}} onPress={()=> props.navigation.navigate("Sign Up")}>Sign Up</Text>
+          Don’t have an account?{' '}
+          <Text
+            style={{color: '#FF7622'}}
+            onPress={() => props.navigation.navigate('Sign Up')}>
+            Sign Up
+          </Text>
         </Text>
         <Text style={{textAlign: 'center', marginTop: 15}}>OR</Text>
         <View

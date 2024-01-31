@@ -5,39 +5,65 @@ import {
   Image,
   TouchableOpacity,
   Animated,
+  ScrollView,
+  Pressable,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import Drawer from './Drawer';
-import BottomNavigation from './BottomNavigation';
-const HomePage = () => {
+
+import Flashoffers from './Flashoffers';
+import OpenRestraunt from './OpenRestraunt';
+import RoseGarden from './RoseGarden';
+import CheesyRestraunt from './CheesyRestraunt';
+
+const HomePage = props => {
   const [showMenu, setShowMenu] = useState(false);
   const moveToRight = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(1)).current;
+  const [selectTab, setSelectTab] = useState(0);
   return (
     <View style={{flex: 1}}>
-
-      <Drawer/>
+      <Drawer />
 
       {/* =======================home Page============================ */}
+
       <Animated.View
         style={{
           flex: 1,
           backgroundColor: '#FFF',
           position: 'absolute',
-          top:0,
-          left:0,
-          right:0,
-          bottom:0,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
           transform: [{scale: scale}, {translateX: moveToRight}],
-          borderRadius:showMenu?30:0 
-        }}
-        >
+          borderRadius: showMenu ? 30 : 0,
+        }}>
+        <View style={styles.bottom_Nav}>
+          <View style={styles.bottomNav}>
+            <Pressable onPress={() => props.navigation.navigate('Home Page')}>
+              <Image source={require('../images/home_.png')} />
+            </Pressable>
+            <Pressable>
+              <Image source={require('../images/search.png')} />
+            </Pressable>
+            <Pressable>
+              <Image source={require('../images/add_new.png')} />
+            </Pressable>
+            <Pressable onPress={() => props.navigation.navigate('My Profile')}>
+              <Image source={require('../images/user.png')} />
+            </Pressable>
+            <Pressable onPress={() => props.navigation.navigate('Favourite')}>
+              <Image source={require('../images/heart.png')} />
+            </Pressable>
+          </View>
+        </View>
         <View style={styles.main_vew}>
           <View style={styles.topDetails}>
             <TouchableOpacity
               onPress={() => {
                 Animated.timing(scale, {
-                  toValue: showMenu ? 1 : 0.6,
+                  toValue: showMenu ? 1 : 0.7,
                   duration: 300,
                   useNativeDriver: true,
                 }).start();
@@ -47,12 +73,9 @@ const HomePage = () => {
                   useNativeDriver: true,
                 }).start();
                 setShowMenu(!showMenu);
-              }}
-              
-              >
+              }}>
               <Image source={require('../images/sidebar.png')} />
             </TouchableOpacity>
-
             <Text
               style={{
                 marginLeft: -80,
@@ -66,21 +89,30 @@ const HomePage = () => {
               Opposite BSNL Office{' '}
               <Image source={require('../images/downarrowkey.png')} />{' '}
             </Text>
-            <Image
-              source={require('../images/cart.png')}
-              style={{maxHeight: 44, width: 45}}
-            />
+            <TouchableOpacity onPress={() => props.navigation.navigate('Cart')}>
+              <Image
+                source={require('../images/cart.png')}
+                style={{maxHeight: 44, width: 45}}
+              />
+            </TouchableOpacity>
           </View>
           <View style={{marginVertical: 60}}>
             <Text style={{fontSize: 20}}>
-              Hey Halal,{' '}
-              <Text style={{fontWeight: 'bold'}}>Good Afternoon</Text>{' '}
+              Hey Halal,
+              <Text style={{fontWeight: 'bold'}}> Good Afternoon</Text>
             </Text>
           </View>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            vertical={true}
+            style={{bottom: 97, position: 'relative'}}>
+            <Flashoffers />
+            <OpenRestraunt />
+            <RoseGarden />
+            <CheesyRestraunt />
+          </ScrollView>
         </View>
-        <BottomNavigation/>
       </Animated.View>
-      
     </View>
   );
 };
@@ -97,5 +129,26 @@ const styles = StyleSheet.create({
   main_vew: {
     marginHorizontal: 20,
     marginVertical: 20,
+    marginBottom: 90,
+  },
+
+  bottomNav: {
+    position: 'relative',
+    backgroudColor: '#FFF',
+
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    width: '100%',
+    height: 50,
+    marginTop: 25,
+    zIndex: 100,
+  },
+  bottom_Nav: {
+    position: 'absolute',
+    bottom: 0,
+    height: 40,
+    backgroundColor: '#FFF',
+    alignContent: 'center',
+    justifyContent: 'center',
   },
 });

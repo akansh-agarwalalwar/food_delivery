@@ -7,6 +7,8 @@ import {
   Image,
 } from 'react-native';
 import React, {useState} from 'react';
+
+import {useNavigation} from '@react-navigation/native';
 const menus = [
   {icons: require('../images/gg_profile.png'), title: 'Profile'},
   {icons: require('../images/orders.png'), title: 'Orders'},
@@ -14,7 +16,7 @@ const menus = [
   {icons: require('../images/privacy.png'), title: 'Privacy Policy'},
   {icons: require('../images/security.png'), title: 'Security'},
 ];
-const Drawer = () => {
+const Drawer = ({navigation}) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
   return (
     <View
@@ -54,7 +56,7 @@ const Drawer = () => {
         />
       </View>
       <View style={{marginHorizontal:20, bottom:90}}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
         <Text style={{color:'#FFF', fontSize:20, fontWeight:'bold'}}>Sign-Out</Text>
         </TouchableOpacity>
       </View>
