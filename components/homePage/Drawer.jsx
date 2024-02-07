@@ -16,17 +16,91 @@ const menus = [
   {icons: require('../images/privacy.png'), title: 'Privacy Policy'},
   {icons: require('../images/security.png'), title: 'Security'},
 ];
-const Drawer = ({navigation}) => {
+const Drawer = () => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
+  const navigation = useNavigation();
   return (
     <View
       style={{
         flex: 1,
         backgroundColor: '#FF4B3A',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
       }}>
       <View style={{marginTop: 150}}>
-        <FlatList
+        <View style={{marginLeft: 20, justifyContent:'space-between', height:340, }}>
+          <TouchableOpacity onPress={()=>navigation.navigate('My Profile')}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                
+              }}>
+              <Image source={require('../images/gg_profile.png')} />
+              <Text style={{marginLeft: 10,
+                    fontSize: 18,
+                    color: '#FFF',
+                    fontWeight: 'bold'}}>Profile</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('My Orders')} >
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                
+              }}>
+              <Image source={require('../images/orders.png')} />
+              <Text style={{marginLeft: 10,
+                    fontSize: 18,
+                    color: '#FFF',
+                    fontWeight: 'bold'
+                    }}>Orders</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                
+              }}>
+              <Image source={require('../images/offers.png')} />
+              <Text style={{marginLeft: 10,
+                    fontSize: 18,
+                    color: '#FFF',
+                    fontWeight: 'bold'}}>Offer And Promo</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                
+              }}>
+              <Image source={require('../images/privacy.png')} />
+              <Text style={{marginLeft: 10,
+                    fontSize: 18,
+                    color: '#FFF',
+                    fontWeight: 'bold'}}>Priavcy Policy</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                
+              }}>
+              <Image source={require('../images/security.png')} />
+              <Text style={{marginLeft: 10,
+                    fontSize: 18,
+                    color: '#FFF',
+                    fontWeight: 'bold'}}>Security</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        {/* <FlatList
           data={menus}
           renderItem={({item, index}) => {
             return (
@@ -53,11 +127,13 @@ const Drawer = ({navigation}) => {
               </TouchableOpacity>
             );
           }}
-        />
+        /> */}
       </View>
-      <View style={{marginHorizontal:20, bottom:90}}>
-        <TouchableOpacity onPress={()=> navigation.navigate('Login')}>
-        <Text style={{color:'#FFF', fontSize:20, fontWeight:'bold'}}>Sign-Out</Text>
+      <View style={{marginHorizontal: 20, bottom: 90}}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={{color: '#FFF', fontSize: 20, fontWeight: 'bold'}}>
+            Sign-Out
+          </Text>
         </TouchableOpacity>
       </View>
     </View>

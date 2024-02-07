@@ -1,10 +1,24 @@
-import {Pressable, StyleSheet, Text, View, Image} from 'react-native';
-import React, {useState} from 'react';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+//com.food_delivery
+import React, {useEffect, useState} from 'react';
 import {TextInput} from 'react-native-paper';
 import CheckBox from '@react-native-community/checkbox';
-import auth from '@react-native-firebase/auth';
+import auth, {signInWithPopup} from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
-
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login_page = props => {
   const [text, setText] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
@@ -16,26 +30,154 @@ const Login_page = props => {
 
   const navigationLogin = useNavigation();
   const [message, setMessage] = useState('');
-  const handleLogin = async () => {
+
+  const [loggedIn, setloggedIn] = useState(false);
+  const [userInfo, setuserInfo] = useState([]);
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      //scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
+      webClientId:
+        '177511355161-tm9otcgai6n197hvamrq18e1vh3ndr1c.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      //offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+    });
+
+    // const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    // return subscriber;
+  }, []);
+
+  async function onGoogleButtonPress() {
     try {
-      if (email.length > 0 && password.length > 0) {
-        const isUserLogIn = await auth().signInWithEmailAndPassword(
-          email,
-          password,
-        );
-        console.log(isUserLogIn);
-        navigationLogin.navigate('Home Page');
-      } else {
-      }
-    } catch (error) {
-      // console.log("Email: ", email, "Password: ", password)
-      console.log(error);
-      setMessage(error.message);
-    }
+      await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+
+      const {idToken, user} = await GoogleSignin.signIn();
+      console.log(user);
+      Alert.alert('Success');
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      return auth().signInWithCredential(googleCredential);
+    } catch (error) {}
+  }
+
+  // function onAuthStateChanged(userInfo) {
+  //   setuserInfo(userInfo);
+  //   console.log(userInfo);
+  //   if (userInfo) setloggedIn(true);
+  // }
+
+  // const signIn = async () => {
+  //   try {
+
+  //     // await GoogleSignin.hasPlayServices();
+  //     // const userInfo = await GoogleSignin.signIn();
+  //     // const initializing = await GoogleSignin.isSignedIn();
+  //     // setUserInfo ({ userInfo});
+  //     // if (!initializing) {
+  //     //   // User is already signed in, navigate to home screen
+  //     //   const navigation = useNavigation();
+  //     //   navigation.navigate('Home Page');
+  //     // }
+  //     // const auth = getAuth();
+  //     // await signInWithCredential(auth, googleCredentials);
+
+  //     // const {idToken} = await GoogleSignin.signIn();
+  //     // const googleCredentials = GoogleAuthProvider.credentials(idToken);
+
+  //     // const navigation = useNavigation();
+  //     // navigation.navigate("Home Page");
+
+  //     await GoogleSignin.hasPlayServices();
+  //     const  ee = await GoogleSignin.signIn();
+  //     console.log(ee)
+  //     console.log(accessToken,idToken)
+  //     setloggedIn(true);
+  //     const credential = auth().GoogleAuthProvider.credential(
+  //       idToken,
+  //       accessToken,
+  //     );
+  //     await auth().signInWithCredential(credential);
+
+  //   } catch (error) {
+  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+  //       // user cancel the login info
+  //     } else if (error.code === statusCodes.IN_PROGRESS) {
+  //       // operation in progress already
+  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+  //       // play services is not available or outdated
+  //     } else {
+  //       // some other error happened
+  //     }
+  //   }
+  // };
+
+  // signOut = async () => {
+  //   try {
+  //     console.log("Sign out");
+  //     await GoogleSignin.revokeAccess();
+  //     await GoogleSignin.signOut();
+  //     this.signIn();
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+
+  // signOut = async () => {
+  //   try {
+  //     await GoogleSignin.revokeAccess();
+  //     await GoogleSignin.signOut();
+  //     setloggedIn(false);
+  //     setuserInfo([]);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const handleLogin = async () => {
+   firestore()
+      .collection('users')
+      .where('email', '==', email)
+      .get()
+      .then(querySnapshot => {
+        if (!querySnapshot.empty) {
+          const userDoc = querySnapshot.docs[0]._data;
+          if (userDoc.email === email && userDoc.password === password) {
+            gotoNextScreen();
+          } else {
+            alert('Please Check/Enter your Email and Password');
+          }
+        } else {
+          alert('User not found');
+        }
+      });
+
+    // try {
+    //   const isUserLogIn = await auth().signInWithEmailAndPassword(
+    //     email,
+    //     password,
+    //   );
+    //   setMessage('');
+    //   console.log(isUserLogIn);
+    //   navigationLogin.navigate('Home Page', {
+    //     email: isUserLogIn.user.email,
+    //     uid: isUserLogIn.user.uid,
+    //     userName: isUserLogIn.user.displayName,
+    //   });
+    // } catch (error) {
+    //   // console.log("Email: ", email, "Password: ", password)
+    //   console.log(error);
+    //   setMessage(error.message);
+    // }
   };
 
+  const gotoNextScreen = async () => {
+    await AsyncStorage.setItem('EMAIL', email);
+    navigationLogin.navigate('Home Page');
+  };
   return (
     <View style={styles.login_main_view}>
+      {/* {userInfo!= null && <Text>{userInfo.user.name}</Text>}
+      {userInfo!= null && <Text>{userInfo.user.email}</Text>}
+      {userInfo!= null && <Image source={{uri: userInfo.user.photo}} 
+      style={{width:100, height:100}}></Image>} */}
       {/* <Text>{message}</Text> */}
       <View style={styles.login_main_view_second}>
         <View style={styles.upperLogin}>
@@ -130,7 +272,11 @@ const Login_page = props => {
             style={styles.pressable}
             onPress={() => {
               // props.navigation.navigate('Home Page');
-              handleLogin();
+              if (email !== '' && password !== '') {
+                handleLogin();
+              } else {
+                alert('Enter Data');
+              }
             }}>
             <Text style={styles.next}>LOG IN</Text>
           </Pressable>
@@ -152,9 +298,15 @@ const Login_page = props => {
             paddingRight: 50,
             paddingTop: 20,
           }}>
-          <Image source={require('../images/facebook.png')} />
-          <Image source={require('../images/twitter.png')} />
-          <Image source={require('../images/apple.png')} />
+          <TouchableOpacity>
+            <Image source={require('../images/facebook.png')} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => onGoogleButtonPress()}>
+            <Image source={require('../images/twitter.png')} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image source={require('../images/apple.png')} />
+          </TouchableOpacity>
         </View>
       </View>
     </View>

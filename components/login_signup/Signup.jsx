@@ -1,38 +1,86 @@
 import {StyleSheet, Text, View, Pressable, Image, Alert} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-paper';
-
 import auth from '@react-native-firebase/auth';
 import {useNavigation} from '@react-navigation/native';
+import Modals from '../common/Modals';
+import firestore from '@react-native-firebase/firestore';
+import uuid from 'react-native-uuid';
 const Signup = props => {
+  const  navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setpassword] = useState('');
   const [userName, setUserName] = useState('');
+  const [mobile , setMobile] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(true);
   const navigationsignUp = useNavigation();
   const [message, setMessage] = useState('');
+  const [modalVisible, setModalVisible] = useState(false)
+  const saveUser = () =>{
+    setModalVisible(true)
+    const userId = uuid.v4();
+    firestore().collection('users').doc(userId).set({
+      name:userName,
+      email:email,
+      password:password,
+      mobile:mobile
+    }).then(res=>{
+      setModalVisible(false)
+      navigation.navigate('Login')
+    }).catch(error=>{
+      setModalVisible(false)
+      console.log(error)
+    })
+  }
+
+
   const handlesignUp = async () => {
-    try {
+    try{
       if(email.length > 0 && password.length >0 ){
         const isUserCreated = await auth().createUserWithEmailAndPassword(
           email,
           password,
-        );
+          mobile
+          
+        )
         console.log(isUserCreated);
-  
-        navigationsignUp.navigate('Login');
+        saveUser(); // Save user to Firestore
+        navigation.navigate('Login')
       }
       else{
-        
+        setMessage('Please fill in all fields.');
       }
-      }
-      // console.log("Email: ", email, "Password: ", password)
-       catch (error) {
-      console.log(error);
-      setMessage(error.message);
     }
-  };
-
+    catch (error){
+    console.log(error)
+    setMessage(error.message)
+    }
+  }
+  // const handlesignUp = async () => {
+  //   try {
+  //     if(email.length > 0 && password.length >0 ){
+  //       const isUserCreated = await auth().createUserWithEmailAndPassword(
+         
+  //         email,
+  //         password,
+  //         mobile
+          
+  //       );
+  //       console.log(isUserCreated);
+  
+  //       navigation.navigate('Login');
+        
+  //     }
+  //     else{
+        
+  //     }
+  //     }
+  //     // console.log("Email: ", email, "Password: ", password)
+  //     catch (error) {
+  //     console.log(error);
+  //     setMessage(error.message);
+  //   }
+  // };
   return (
     <View style={styles.login_main_view}>
       {/* <Text>{message}</Text> */}
@@ -84,8 +132,33 @@ const Signup = props => {
               height: 62,
               width: 327,
             }}
+            keyboardType='email-address'
             value={email}
             onChangeText={value => setEmail(value)}
+          />
+          <Text
+            style={{
+              fontSize: 17,
+              fontWeight: '400',
+              color: '#32343E',
+              marginLeft: 5,
+              marginTop: 5,
+            }}>
+            Phone Number
+          </Text>
+          <TextInput
+            placeholder="Enter Your Number"
+            style={{
+              backgroundColor: '#F0F5FA',
+              borderRadius: 15,
+              marginTop: 9,
+              height: 62,
+              width: 327,
+              
+            }}
+            keyboardType='number-pad'
+            value={mobile.toString()}
+            onChangeText={value => setMobile(value)}
           />
           <Text
             style={{
@@ -122,7 +195,24 @@ const Signup = props => {
             style={styles.pressable}
             onPress={() => {
               // props.navigation.navigate('Home Page');
-              handlesignUp();
+              // saveUser();
+
+              setModalVisible(!modalVisible)
+              if(
+              email!=='' &&
+              password!=='' &&
+              userName!=='' &&
+              mobile!=='' &&
+              mobile.length>9
+              ){
+                handlesignUp();
+              }
+              else{
+                alert('Plese Enter data')
+              }
+              handlesignUp()
+
+
             }}>
             <Text style={styles.next}>Sign Up</Text>
           </Pressable>
@@ -140,6 +230,7 @@ const Signup = props => {
           <Image source={require('../images/apple.png')} />
         </View>
       </View>
+      <Modals modalVisible={modalVisible} setModalVisible={setModalVisible} />
     </View>
   );
 };
@@ -156,7 +247,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   secondView: {
-    flex: 2,
+    flex: 3,
     backgroundColor: 'white',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
@@ -201,4 +292,4 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontWeight: 'bold',
   },
-});
+})

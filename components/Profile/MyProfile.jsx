@@ -1,14 +1,25 @@
-import {Image, StyleSheet, View, Text, ScrollView, Pressable} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Pressable,
+} from 'react-native';
 import React from 'react';
 import ProfileCard from './ProfileCard';
+
 const MyProfile = props => {
+
+  
   return (
+
     <View style={{backgroundColor: '#FFF', flex: 1, marginBottom: 35}}>
       <View style={{marginHorizontal: 20, marginVertical: 20}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Pressable onPress={() => props.navigation.navigate('Home Page')}>
-            <Image source={require('../images/back2.png')}/>
-        </Pressable>
+            <Image source={require('../images/back2.png')} />
+          </Pressable>
           <Text style={{fontSize: 25, color: '#000', marginHorizontal: 16}}>
             Profile
           </Text>
@@ -22,7 +33,6 @@ const MyProfile = props => {
             <View style={styles.card_styles}>
               <View style={{marginVertical: 10, marginHorizontal: 15}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  
                   <Image source={require('../images/personal_info.png')} />
                   <Text
                     style={{
@@ -51,7 +61,8 @@ const MyProfile = props => {
                       fontSize: 24,
                       marginVertical: 10,
                       marginHorizontal: 10,
-                    }} onPress={()=> props.navigation.navigate('My Address')}>
+                    }}
+                    onPress={() => props.navigation.navigate('My Address')}>
                     Address
                   </Text>
                   <Image
@@ -73,7 +84,7 @@ const MyProfile = props => {
                       marginVertical: 10,
                       marginHorizontal: 10,
                     }}
-                    onPress={()=>props.navigation.navigate('Cart')}>
+                    onPress={() => props.navigation.navigate('Cart')}>
                     Cart
                   </Text>
                   <Image
@@ -107,6 +118,7 @@ const MyProfile = props => {
                   <Image source={require('../images/notifications.png')} />
 
                   <Text
+                    onPress={() => props.navigation.navigate('Notifications')}
                     style={{
                       fontSize: 24,
                       marginVertical: 10,
@@ -124,7 +136,7 @@ const MyProfile = props => {
                   <Image source={require('../images/payment_method.png')} />
 
                   <Text
-                  onPress={()=>props.navigation.navigate('Payment Method')}
+                    onPress={() => props.navigation.navigate('Payment Method')}
                     style={{
                       fontSize: 24,
                       marginVertical: 10,
@@ -147,12 +159,13 @@ const MyProfile = props => {
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Image source={require('../images/personal_info.png')} />
                   <Text
+                  onPress={() => props.navigation.navigate("My Orders")}
                     style={{
                       fontSize: 24,
                       marginVertical: 10,
                       marginHorizontal: 10,
                     }}>
-                    FAQ's
+                    Orders
                   </Text>
                   <Image
                     source={require('../images/move_forward.png')}

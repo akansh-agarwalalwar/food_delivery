@@ -1,10 +1,10 @@
 import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
 import React from 'react';
 
-const Payment_Successfull = () => {
+const Payment_Successfull = (props) => {
   return (
-    <View style={{justifyContent: 'space-between', alignItems: 'center'}}>
-      <View>
+    <View style={{justifyContent: 'space-between', alignItems: 'center', flex:1}}>
+      <View style={{ flex:1, justifyContent:'center'}}>
         <View
           style={{
             flexDirection: 'column',
@@ -39,11 +39,13 @@ const Payment_Successfull = () => {
           </View>
         </View>
       </View>
+      <View style={{position:'absolute', bottom:20}}>
       <Pressable
         style={styles.pressable}
-        onPress={() => props.navigation.navigate('Track Order')}>
-        <Text style={styles.next}>TRACK ORDER</Text>
+        onPress={() => props.navigation.navigate('Home Page')}>
+        <Text style={styles.next}>GO TO HOME</Text>
       </Pressable>
+      </View>
     </View>
   );
 };

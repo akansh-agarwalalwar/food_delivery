@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "1001311430575",
-    "project_id": "food-delivery-cedee",
-    "storage_bucket": "food-delivery-cedee.appspot.com"
+    "project_number": "177511355161",
+    "project_id": "food-delivery-9c9d4",
+    "storage_bucket": "food-delivery-9c9d4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1001311430575:android:dbd6e61949e14f8017f15a",
+        "mobilesdk_app_id": "1:177511355161:android:43ed90349023a9e3dd6b88",
         "android_client_info": {
           "package_name": "com.food_delivery"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "177511355161-tm9otcgai6n197hvamrq18e1vh3ndr1c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAXf2nAx1orsf5DbmyHkNlZ3r9D4xbtJjY"
+          "current_key": "AIzaSyBapPg1n2r831j2mZuJlxxXpt-ij3XR0L0"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177511355161-tm9otcgai6n197hvamrq18e1vh3ndr1c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

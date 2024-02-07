@@ -1,4 +1,4 @@
-import {Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Image, Pressable, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {RadioButton} from 'react-native-paper';
 const CheckOut = props => {
@@ -11,10 +11,13 @@ const CheckOut = props => {
             flexDirection: 'row',
             alignItems: 'center',
           }}>
-          <Image
+            <TouchableOpacity onPress={() => props.navigation.goBack()}>
+            <Image
             source={require('../images/back2.png')}
-            onPress={() => props.navigation.navigate('Cart')}
+            
           />
+            </TouchableOpacity>
+          
           <Text style={{fontSize: 20, color: '#000', marginHorizontal: 110}}>
             CheckOut
           </Text>

@@ -15,12 +15,12 @@ import Flashoffers from './Flashoffers';
 import OpenRestraunt from './OpenRestraunt';
 import RoseGarden from './RoseGarden';
 import CheesyRestraunt from './CheesyRestraunt';
+import SpicyRestraunt from './SpicyRestraunt';
 
 const HomePage = props => {
   const [showMenu, setShowMenu] = useState(false);
   const moveToRight = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(1)).current;
-  const [selectTab, setSelectTab] = useState(0);
   return (
     <View style={{flex: 1}}>
       <Drawer />
@@ -110,6 +110,12 @@ const HomePage = props => {
             <OpenRestraunt />
             <RoseGarden />
             <CheesyRestraunt />
+            <TouchableOpacity
+              onPress={() =>
+                props.navigation.navigate('Details Of Spicy Restraunt')
+              }>
+              <SpicyRestraunt />
+            </TouchableOpacity>
           </ScrollView>
         </View>
       </Animated.View>

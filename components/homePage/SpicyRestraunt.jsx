@@ -1,17 +1,17 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
 import React from 'react';
 
-const RoseGarden = () => {
+const SpicyRestraunt = () => {
   return (
     <View style={{marginVertical: 20, position: 'relative'}}>
       <View>
         <Image
-          source={require('../images/rosegarden.png')}
+          source={require('../images/spicy_restraunt.png')}
           style={{width: '100%', height: 170}}
         />
-        <Text style={styles.openRestraunts}>Rose Garden Restraunt</Text>
+        <Text style={styles.openRestraunts}>Spicy Restraunt</Text>
         <Text style={{color: '#A0A5BA', fontSize: 16}}>
-          Burger - Chiken - Riche - Wings{' '}
+          Pizza - Sandwich - Burger
         </Text>
         <View style={{flexDirection: 'row', marginVertical: 10}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -49,7 +49,7 @@ const RoseGarden = () => {
   );
 };
 
-export default RoseGarden;
+export default SpicyRestraunt;
 
 const styles = StyleSheet.create({
   openRestraunts: {
