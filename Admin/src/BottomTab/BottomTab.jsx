@@ -49,9 +49,11 @@ const styles = StyleSheet.create({
         bottom: 0,
         width: '100%',
         height: 50,
+        
         justifyContent:'space-between',
         alignItems:'center',
         flexDirection:'row',
+        
       },
       bottomTabImg:{
         height:30,

@@ -43,6 +43,7 @@ import AddItems from './Admin/src/BottomTab/AddItems';
 import NotificationAdmin from './Admin/src/BottomTab/NotificationAdmin';
 import Transactions from './Admin/src/BottomTab/Transactions';
 import OrderDelivery from './Admin/src/BottomTab/OrderDelivery';
+import EditItem from './Admin/src/BottomTab/EditItem';
 
 export default function App(): React.JSX.Element {
 
@@ -77,9 +78,9 @@ export default function App(): React.JSX.Element {
       {/* <CheckOut/> */}
 {/* <Notification/> */}
 {/* <Orders/> */}
-      <NavigationContainer>
+      {/* <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
-        {/* <Stack.Screen name = "Splash"  component= {Splash} /> */}
+        <Stack.Screen name = "Splash"  component= {Splash} />
           <Stack.Screen name="Home" component={Main_page} />
           <Stack.Screen name="SliderPage" component={SliderPage} />
           <Stack.Screen name="SliderPage2" component={SliderPage2} />
@@ -108,11 +109,11 @@ export default function App(): React.JSX.Element {
           <Stack.Screen name="Notifications" component={Notification} />
           <Stack.Screen name="My Orders" component={Orders} />
         </Stack.Navigator>
-      </NavigationContainer>
+      </NavigationContainer> */}
 
-{/* <NavigationContainer >
+<NavigationContainer >
   <Stack.Navigator screenOptions={{headerShown: false}} >
-  <Stack.Screen name = "Splash"  component= {Splash} />
+  {/* <Stack.Screen name = "Splash"  component= {Splash} /> */}
   <Stack.Screen name = "Main Login"  component= {MainLoginPage} />
   <Stack.Screen name = "Admin Login"  component= {AdminLogin} />
   <Stack.Screen name = "Admin Dashboard"  component= {AdminDasboard} />
@@ -121,9 +122,10 @@ export default function App(): React.JSX.Element {
   <Stack.Screen name = "Admin Notifications"  component= {NotificationAdmin} />
   <Stack.Screen name = "Admin Transactions"  component= {Transactions} />
   <Stack.Screen name = "Delivered Order Admin"  component= {OrderDelivery} />
+  <Stack.Screen name = "EditItem"  component= {EditItem} />
   
   </Stack.Navigator>
-</NavigationContainer> */}
+</NavigationContainer>
 
 
     </>

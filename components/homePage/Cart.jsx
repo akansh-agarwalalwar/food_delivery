@@ -2,7 +2,7 @@ import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 const Cart = () => {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -165,7 +165,7 @@ const Cart = () => {
         <View style={{ alignItems:'center', marginBottom:20}}>
         <TouchableOpacity
           style={styles.pressable}
-          onPress={() => props.navigation.navigate('Check Out')}>
+          onPress={() => navigation.navigate('Check Out')}>
           <Text style={styles.next}>Place Order</Text>
         </TouchableOpacity>
         </View>

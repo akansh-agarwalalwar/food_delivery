@@ -6,13 +6,12 @@ const ProfileCard = (props) => {
   //   // Handle the case where route is not available
   //   return null;
   // }
-  const route = useRoute();
-  const {userName} = route.params;
+  
   return (
     <View style={{marginVertical: 30, flexDirection: 'row'}}>
       <Image source={require('../images/Profile_background.png')} />
       <View style={{marginHorizontal: 30}}>
-        <Text style={{color: '#32343E', fontSize: 30}}>{props.userName}</Text>
+        <Text style={{color: '#32343E', fontSize: 30}}>Username</Text>
         <Text
           style={{
             marginVertical: 10,
