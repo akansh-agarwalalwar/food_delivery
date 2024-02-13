@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
+
 import React, {useState} from 'react';
 import BottomTab from '../BottomTab/BottomTab';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -59,41 +60,12 @@ const AddItems = () => {
 
     const reference = storage().ref(imageData.fileName);
     const pathToFile = imageData.uri;
-    // uploads file
     await reference.putFile(pathToFile);
     const url = await storage()
       .ref(imageData.fileName)
       .getDownloadURL();
     console.log(url);
     uploadItem(url);
-
-    
-    // const reference = storage().ref(imageData.assets[0].fileName);
-    // // const reference = storage().ref(new Date().toISOString());
-    // const pathToFile = imageData.assets[0].uri;
-    // await reference.putFile(pathToFile);
-
-    // const url = await storage().ref(reference).getDownloadURL();
-    // console.log(url)
-    // uploadItem();
-    // await reference
-    //   .putFile(imageData.assets[0].uri)
-    //   .then(() => {
-    //     console.log('Image uploaded to the storage');
-    //     storage()
-    //       .ref(reference.toString())
-    //       .getDownloadURL()
-    //       .then(url => {
-    //         console.log(url);
-    //         uploadItem(url);
-    //       })
-    //       .catch(error => {
-    //         console.log('Error getting download URL', error);
-    //       });
-    //   })
-    //   .catch(error => {
-    //     console.log('Error uploading image', error);
-    //   });
   };
 
   const uploadItem = url => {

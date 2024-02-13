@@ -19,13 +19,14 @@ const AdminLogin = ({navigation}) => {
   const userLogin = async () => {
     const users = await firestore().collection('Users').get();
     // console.log(users.password +" " + users.email);
-    if(email == users.docs[0]._data.email && password== users.docs[0]._data.password ){
-      navigation.navigate('Admin Dashboard')
+    if (
+      email == users.docs[0]._data.email &&
+      password == users.docs[0]._data.password
+    ) {
+      navigation.navigate('Items');
+    } else {
+      alert('Wrong Email/Password');
     }
-    else{
-      alert("Wrong Email/Password")
-    }
-    
   };
 
   return (
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     borderColor: 'orange',
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft:40
+    marginLeft: 40,
   },
   pressable: {
     backgroundColor: '#FF4B3A',

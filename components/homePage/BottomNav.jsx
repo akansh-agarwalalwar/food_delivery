@@ -14,7 +14,7 @@ const BottomNav = (props) => {
             <Pressable onPress={()=>{
               alert("Only For Admin")
             }}>
-              <Image source={require('../images/search.png')} />
+              <Image source={require('../images/search.png')}  />
             </Pressable>
             <Pressable>
               <Image source={require('../images/add_new.png')} />

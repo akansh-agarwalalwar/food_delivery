@@ -1,233 +1,209 @@
 import {
-    View,
-    Text,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    PermissionsAndroid,
-    Image,
-    ScrollView,
-  } from 'react-native';
-  import React, {useState} from 'react';
-  import {launchImageLibrary} from 'react-native-image-picker';
-  import storage from '@react-native-firebase/storage';
-  import firestore from '@react-native-firebase/firestore';
-  import {useRoute} from '@react-navigation/native';
-import BottomTab from './BottomTab';
-  const EditItem = ({navigation}) => {
-    const route = useRoute();
-    const [imageData, setImageData] = useState({
-      assets: [{uri: route.params.data.imageUrl}],
-    });
-    const [name, setName] = useState(route.params.data.name);
-    const [price, setPrice] = useState(route.params.data.price);
-    const [discountPrice, setDiscountPrice] = useState(
-      route.params.data.discountPrice,
-    );
-    const [description, setDescription] = useState(route.params.data.description);
-    const [imageUrl, setImageUrl] = useState('');
-    const requestCameraPermission = async () => {
-      try {
-        const granted = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.CAMERA,
-          {
-            title: 'Cool Photo App Camera Permission',
-            message:
-              'Cool Photo App needs access to your camera ' +
-              'so you can take awesome pictures.',
-            buttonNeutral: 'Ask Me Later',
-            buttonNegative: 'Cancel',
-            buttonPositive: 'OK',
-          },
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log('You can use the camera');
-          openGallery();
-        } else {
-          console.log('Camera permission denied');
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-    };
-    const openGallery = async () => {
-      const result = await launchImageLibrary({mediaType: 'photo'});
-      if (result.didCancel) {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Image,
+  ScrollView,
+} from 'react-native';
+import React, {useState} from 'react';
+import BottomTab from '../BottomTab/BottomTab';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {PermissionsAndroid} from 'react-native';
+import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
+import {useRoute} from '@react-navigation/native';
+const EditItems = ({navigation}) => {
+  const route = useRoute();
+  const [imageData, setImageData] = useState({
+    assets: [{uri: route.params.data.imageUrl}],
+  });
+  const [name, setName] = useState(route.params.data.name);
+  const [price, setPrice] = useState(route.params.data.price);
+  const [discountPrice, setDiscountPrice] = useState(
+    route.params.data.discountPrice,
+  );
+  const [descryption, setDescryption] = useState(route.params.data.descryption);
+  const [imageUrl, setImageUrl] = useState('');
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'Food Delivery App',
+          message:
+            'Food Delivery App needs access to your camera ' +
+            'so you can take awesome pictures.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log('You can use the camera');
+        openGallery();
       } else {
-        console.log(result);
-        setImageData(result);
+        console.log('Camera permission denied');
       }
-    };
-  
-    const uplaodImage = async () => {
-      const reference = storage().ref(imageData.assets[0].fileName);
-      const pathToFile = imageData.assets[0].uri;
-      // uploads file
-      await reference.putFile(pathToFile);
-      const url = await storage()
-        .ref(imageData.assets[0].fileName)
-        .getDownloadURL();
-      console.log(url);
-      uploadItem(url);
-    };
-  
-    const uploadItem = () => {
-      firestore()
-        .collection('items')
-        .doc(route.params.id)
-        .update({
-          name: name,
-          price: price,
-          discountPrice: discountPrice,
-          description: description,
-          imageUrl: route.params.data.imageUrl ||  '',
-        })
-        .then(() => {
-          console.log('User added!');
-          navigation.goBack();
-        });
-    };
-  
-    return (
-        <View style={styles.container}>
-            <BottomTab/>
-      <ScrollView style={styles.containe}>
-        
-        
+    } catch (result) {
+      console.warn(result);
+      setImageData(result);
+    }
+  };
+
+  const openGallery = async () => {
+    const result = await launchImageLibrary({mediaType: 'photo'});
+    if (!result.didCancel) {
+      setImageData(result.assets[0]);
+    } else {
+      console.warn(result);
+    }
+  };
+
+  const uploadImg = async () => {
+    const reference = storage().ref(imageData.fileName);
+    const pathToFile = imageData.uri;
+    await reference.putFile(pathToFile);
+    const url = await storage().ref(imageData.fileName).getDownloadURL();
+    console.log(url);
+    uploadItem(url);
+  };
+
+  const uploadItem = () => {
+    firestore()
+      .collection('items')
+      .doc(route.params.id)
+      .update({
+        name: name,
+
+        price: price,
+        discountPrice: discountPrice,
+        descryption: descryption,
+        imageUrl: route.params.data.imageUrl + ' ',
+      })
+      .then(() => {
+        console.log('user added');
+        navigation.goBack();
+      });
+  };
+  return (
+    <View style={styles.container}>
+      <BottomTab />
+
+      <ScrollView style={styles.containe} showsVerticalScrollIndicator={false}>
+        <View>
           <View style={styles.header}>
-            <Text style={styles.headerText}>Edit Item</Text>
+            <Text style={styles.headerText}>Edit Items</Text>
           </View>
-  
           {imageData !== null ? (
             <Image
               source={{uri: imageData.assets[0].uri}}
-              style={styles.imageStyle}
+              style={{
+                width: '90%',
+                height: 200,
+                borderRadius: 10,
+                alignSelf: 'center',
+                marginTop: 20,
+              }}
             />
           ) : null}
           <TextInput
             placeholder="Enter Item Name"
-            style={styles.inputStyle}
+            style={styles.textInput}
             value={name}
             onChangeText={text => setName(text)}
           />
           <TextInput
             placeholder="Enter Item Price"
-            style={styles.inputStyle}
+            style={styles.textInput}
             value={price}
             onChangeText={text => setPrice(text)}
           />
           <TextInput
             placeholder="Enter Item Discount Price"
-            style={styles.inputStyle}
+            style={styles.textInput}
             value={discountPrice}
             onChangeText={text => setDiscountPrice(text)}
           />
           <TextInput
-            placeholder="Enter Item Description"
-            style={styles.inputStyle}
-            value={description}
-            onChangeText={text => setDescription(text)}
+            placeholder="Enter Item Descryption"
+            style={styles.textInput}
+            value={descryption}
+            onChangeText={text => setDescryption(text)}
           />
-          <TextInput
-            placeholder="Enter Item Image URL"
-            style={styles.inputStyle}
-            value={imageUrl}
-            onChangeText={text => setImageUrl(text)}
-          />
-          <Text style={{alignSelf: 'center', marginTop: 20}}>OR</Text>
+          <Text style={{marginTop: 20, alignItems: 'center'}}>OR</Text>
           <TouchableOpacity
             style={styles.pickBtn}
-            onPress={() => {
-              requestCameraPermission();
-            }}>
-            <Text>Pick Image From Gallery</Text>
+            onPress={() => requestCameraPermission()}>
+            <Text>Upload Image From Gallery</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.pressable}
-            onPress={() => {
-              uploadItem();
-            }}>
+            onPress={() => uploadItem()}>
             <Text style={styles.next}>Upload Item</Text>
           </TouchableOpacity>
-          </ScrollView>
         </View>
-      
-    );
-  };
-  
-  export default EditItem;
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      
-    },
-    containe: {
-      flex: 1,
-      marginBottom:50
-    },
-    header: {
-      height: 60,
-      width: '100%',
-      backgroundColor: '#fff',
-      elevation: 5,
-      paddingLeft: 20,
-      justifyContent: 'center',
-    },
-    headerText: {
-      fontSize: 18,
-      fontWeight: '700',
-    },
-    inputStyle: {
-      width: '90%',
-      height: 50,
-      borderRadius: 10,
-      borderWidth: 0.5,
-      paddingLeft: 20,
-      paddingRight: 20,
-      marginTop: 30,
-      alignSelf: 'center',
-    },
-    pickBtn: {
-      width: '90%',
-      height: 50,
-      borderWidth: 0.5,
-      borderRadius: 10,
-      alignSelf: 'center',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 20,
-    },
-    uploadBtn: {
-      backgroundColor: '#5246f2',
-      width: '90%',
-      height: 50,
-      borderRadius: 10,
-      alignSelf: 'center',
-      marginTop: 20,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginBottom: 70,
-    },
-    imageStyle: {
-      width: '90%',
-      height: 200,
-      borderRadius: 10,
-      alignSelf: 'center',
-      marginTop: 20,
-    },
-    pressable: {
-        backgroundColor: '#FF4B3A',
-        width: 327,
-        height: 62,
-        borderRadius: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginLeft: 3,
-        marginTop: 20,
-      },
-      next: {
-        fontSize: 20,
-        color: '#FFF',
-        fontWeight: 'bold',
-      },
-  });
+      </ScrollView>
+    </View>
+  );
+};
+
+export default EditItems;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  containe: {
+    flex: 1,
+    // alignItems: 'center',
+    marginBottom: 50,
+  },
+  header: {
+    height: 70,
+    width: '100%',
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: '700',
+    marginLeft: 15,
+  },
+  textInput: {
+    paddingRight: 15,
+    paddingLeft: 15,
+    width: '90%',
+    height: 50,
+    borderRadius: 10,
+    borderWidth: 1,
+    marginTop: 30,
+    marginHorizontal: 15,
+  },
+  pickBtn: {
+    width: '90%',
+    height: 50,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+    borderRadius: 10,
+    alignSelf: 'center',
+  },
+  pressable: {
+    backgroundColor: '#FF4B3A',
+    width: 327,
+    height: 62,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 3,
+    marginTop: 20,
+  },
+  next: {
+    fontSize: 20,
+    color: '#FFF',
+    fontWeight: 'bold',
+  },
+});

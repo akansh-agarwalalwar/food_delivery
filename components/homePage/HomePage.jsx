@@ -42,19 +42,19 @@ const HomePage = props => {
         <View style={styles.bottom_Nav}>
           <View style={styles.bottomNav}>
             <Pressable onPress={() => props.navigation.navigate('Home Page')}>
-              <Image source={require('../images/home_.png')} />
+              <Image source={require('../images/home_.png')}  style={{height:24, width:24}} />
             </Pressable>
             <Pressable>
-              <Image source={require('../images/search.png')} />
+              <Image source={require('../images/search.png')} style={{height:24, width:24}} />
             </Pressable>
             <Pressable>
-              <Image source={require('../images/add_new.png')} />
+              <Image source={require('../images/add.png')}  style={{height:24, width:24}} />
             </Pressable>
             <Pressable onPress={() => props.navigation.navigate('My Profile')}>
-              <Image source={require('../images/user.png')} />
+              <Image source={require('../images/user.png')}  style={{height:24, width:24}} />
             </Pressable>
             <Pressable onPress={() => props.navigation.navigate('Favourite')}>
-              <Image source={require('../images/heart.png')} />
+              <Image source={require('../images/heart.png')} style={{height:24, width:24}}  />
             </Pressable>
           </View>
         </View>
@@ -141,13 +141,13 @@ const styles = StyleSheet.create({
   bottomNav: {
     position: 'relative',
     backgroudColor: '#FFF',
-
     justifyContent: 'space-between',
     flexDirection: 'row',
-    width: '100%',
+    width: "92%",
     height: 50,
     marginTop: 25,
-    zIndex: 100,
+    marginHorizontal:15,
+
   },
   bottom_Nav: {
     position: 'absolute',

@@ -57,82 +57,8 @@ const Login_page = props => {
       return auth().signInWithCredential(googleCredential);
     } catch (error) {}
   }
-
-  // function onAuthStateChanged(userInfo) {
-  //   setuserInfo(userInfo);
-  //   console.log(userInfo);
-  //   if (userInfo) setloggedIn(true);
-  // }
-
-  // const signIn = async () => {
-  //   try {
-
-  //     // await GoogleSignin.hasPlayServices();
-  //     // const userInfo = await GoogleSignin.signIn();
-  //     // const initializing = await GoogleSignin.isSignedIn();
-  //     // setUserInfo ({ userInfo});
-  //     // if (!initializing) {
-  //     //   // User is already signed in, navigate to home screen
-  //     //   const navigation = useNavigation();
-  //     //   navigation.navigate('Home Page');
-  //     // }
-  //     // const auth = getAuth();
-  //     // await signInWithCredential(auth, googleCredentials);
-
-  //     // const {idToken} = await GoogleSignin.signIn();
-  //     // const googleCredentials = GoogleAuthProvider.credentials(idToken);
-
-  //     // const navigation = useNavigation();
-  //     // navigation.navigate("Home Page");
-
-  //     await GoogleSignin.hasPlayServices();
-  //     const  ee = await GoogleSignin.signIn();
-  //     console.log(ee)
-  //     console.log(accessToken,idToken)
-  //     setloggedIn(true);
-  //     const credential = auth().GoogleAuthProvider.credential(
-  //       idToken,
-  //       accessToken,
-  //     );
-  //     await auth().signInWithCredential(credential);
-
-  //   } catch (error) {
-  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-  //       // user cancel the login info
-  //     } else if (error.code === statusCodes.IN_PROGRESS) {
-  //       // operation in progress already
-  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-  //       // play services is not available or outdated
-  //     } else {
-  //       // some other error happened
-  //     }
-  //   }
-  // };
-
-  // signOut = async () => {
-  //   try {
-  //     console.log("Sign out");
-  //     await GoogleSignin.revokeAccess();
-  //     await GoogleSignin.signOut();
-  //     this.signIn();
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-  // };
-
-  // signOut = async () => {
-  //   try {
-  //     await GoogleSignin.revokeAccess();
-  //     await GoogleSignin.signOut();
-  //     setloggedIn(false);
-  //     setuserInfo([]);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const handleLogin = async () => {
-   firestore()
+    firestore()
       .collection('users')
       .where('email', '==', email)
       .get()
@@ -148,24 +74,6 @@ const Login_page = props => {
           alert('User not found');
         }
       });
-
-    // try {
-    //   const isUserLogIn = await auth().signInWithEmailAndPassword(
-    //     email,
-    //     password,
-    //   );
-    //   setMessage('');
-    //   console.log(isUserLogIn);
-    //   navigationLogin.navigate('Home Page', {
-    //     email: isUserLogIn.user.email,
-    //     uid: isUserLogIn.user.uid,
-    //     userName: isUserLogIn.user.displayName,
-    //   });
-    // } catch (error) {
-    //   // console.log("Email: ", email, "Password: ", password)
-    //   console.log(error);
-    //   setMessage(error.message);
-    // }
   };
 
   const gotoNextScreen = async () => {
@@ -174,12 +82,28 @@ const Login_page = props => {
   };
   return (
     <View style={styles.login_main_view}>
-      {/* {userInfo!= null && <Text>{userInfo.user.name}</Text>}
-      {userInfo!= null && <Text>{userInfo.user.email}</Text>}
-      {userInfo!= null && <Image source={{uri: userInfo.user.photo}} 
-      style={{width:100, height:100}}></Image>} */}
-      {/* <Text>{message}</Text> */}
       <View style={styles.login_main_view_second}>
+        <TouchableOpacity
+          onPress={() => {
+            navigationLogin.navigate('Admin Login');
+          }}>
+          <Text
+            style={{
+              right: 0,
+              position: 'absolute',
+              margin: 20,
+              backgroundColor: '#FFF',
+              height: 30,
+              width: 60,
+              borderRadius: 15,
+              textAlign: 'center',
+              textAlignVertical: 'center',
+              fontSize: 16,
+              color: '#4A4947',
+            }}>
+            Admin
+          </Text>
+        </TouchableOpacity>
         <View style={styles.upperLogin}>
           <Text style={styles.login_text}>Log In</Text>
           <Text style={styles.SignInText}>
@@ -246,11 +170,13 @@ const Login_page = props => {
           />
 
           <View>
-            <CheckBox
-              value={isSelected}
-              onValueChange={setSelection}
-              style={styles.checkbox}
-            />
+            <TouchableOpacity>
+              <CheckBox
+                value={isSelected}
+                onValueChange={setSelection}
+                style={styles.checkbox}
+              />
+            </TouchableOpacity>
             <View style={{marginTop: -25}}>
               <Text style={{marginLeft: 33}}>Remember me</Text>
               <Text

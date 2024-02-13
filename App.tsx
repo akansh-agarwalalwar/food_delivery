@@ -32,12 +32,11 @@ import Favourite from './components/homePage/Favourite';
 import Spicy_Restraunt_Details from './components/Details_Of_Restraunt/Spicy_Restraunt_Details';
 import SpicyRestraunt from './components/homePage/SpicyRestraunt';
 import Notification from './components/Profile/Notification';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import Orders from './components/Profile/Orders';
 import AdminLogin from './Admin/src/screens/AdminLogin';
 import MainLoginPage from './Admin/src/screens/MainLoginPage';
 import Splash from './Admin/src/screens/Splash';
-import AdminDasboard from './Admin/src/screens/AdminDasboard';
 import Items from './Admin/src/BottomTab/Items';
 import AddItems from './Admin/src/BottomTab/AddItems';
 import NotificationAdmin from './Admin/src/BottomTab/NotificationAdmin';
@@ -46,8 +45,6 @@ import OrderDelivery from './Admin/src/BottomTab/OrderDelivery';
 import EditItem from './Admin/src/BottomTab/EditItem';
 
 export default function App(): React.JSX.Element {
-
-  
   return (
     <>
       {/* <Main_page /> */}
@@ -76,8 +73,8 @@ export default function App(): React.JSX.Element {
       {/* <SpicyRestraunt/> */}
       {/* <Cart/> */}
       {/* <CheckOut/> */}
-{/* <Notification/> */}
-{/* <Orders/> */}
+      {/* <Notification/> */}
+      {/* <Orders/> */}
       {/* <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name = "Splash"  component= {Splash} />
@@ -111,23 +108,52 @@ export default function App(): React.JSX.Element {
         </Stack.Navigator>
       </NavigationContainer> */}
 
-<NavigationContainer >
-  <Stack.Navigator screenOptions={{headerShown: false}} >
-  {/* <Stack.Screen name = "Splash"  component= {Splash} /> */}
-  <Stack.Screen name = "Main Login"  component= {MainLoginPage} />
-  <Stack.Screen name = "Admin Login"  component= {AdminLogin} />
-  <Stack.Screen name = "Admin Dashboard"  component= {AdminDasboard} />
-  <Stack.Screen name = "Items"  component= {Items} />
-  <Stack.Screen name = "Add Items"  component= {AddItems} />
-  <Stack.Screen name = "Admin Notifications"  component= {NotificationAdmin} />
-  <Stack.Screen name = "Admin Transactions"  component= {Transactions} />
-  <Stack.Screen name = "Delivered Order Admin"  component= {OrderDelivery} />
-  <Stack.Screen name = "EditItem"  component= {EditItem} />
-  
-  </Stack.Navigator>
-</NavigationContainer>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          {/* <Stack.Screen name = "Splash"  component= {Splash} /> */}
+          <Stack.Screen name="Login" component={Login_page} />
+          <Stack.Screen name="Admin Login" component={AdminLogin} />
+          <Stack.Screen name="Items" component={Items} />
+          <Stack.Screen name="Add Items" component={AddItems} />
+          <Stack.Screen
+            name="Admin Notifications"
+            component={NotificationAdmin}
+          />
 
+          <Stack.Screen name="Admin Transactions" component={Transactions} />
 
+          <Stack.Screen
+            name="Delivered Order Admin"
+            component={OrderDelivery}
+          />
+          <Stack.Screen name="EditItem" component={EditItem} />
+          <Stack.Screen name="ForgortPassword" component={ForgotPassword} />
+          <Stack.Screen name="Home Page" component={HomePage} />
+          <Stack.Screen name="Sign Up" component={Signup} />
+          <Stack.Screen name="My Profile" component={MyProfile} />
+          <Stack.Screen name="Personal Info" component={Personal_Info} />
+          <Stack.Screen name="Edit Profile" component={Edit_Profile} />
+          <Stack.Screen name="Cart" component={Cart} />
+          <Stack.Screen name="Payment Method" component={Payment_Method} />
+          <Stack.Screen name="Add New" component={AddNew} />
+          <Stack.Screen name="Sign Out" component={SignOut} />
+          <Stack.Screen
+            name="Payment Successfull"
+            component={Payment_Successfull}
+          />
+          <Stack.Screen name="Track Order" component={TrackOder} />
+          <Stack.Screen name="My Address" component={Address} />
+          <Stack.Screen name="Add New Address" component={AddNewAddress} />
+          <Stack.Screen name="Favourite" component={Favourite} />
+          <Stack.Screen
+            name="Details Of Spicy Restraunt"
+            component={Spicy_Restraunt_Details}
+          />
+          <Stack.Screen name="Check Out" component={CheckOut} />
+          <Stack.Screen name="Notifications" component={Notification} />
+          <Stack.Screen name="My Orders" component={Orders} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </>
   );
 }
