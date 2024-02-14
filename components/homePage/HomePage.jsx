@@ -3,24 +3,93 @@ import {
   Text,
   View,
   Image,
+  FlatList,
   TouchableOpacity,
   Animated,
   ScrollView,
   Pressable,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import Drawer from './Drawer';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Flashoffers from './Flashoffers';
 import OpenRestraunt from './OpenRestraunt';
 import RoseGarden from './RoseGarden';
 import CheesyRestraunt from './CheesyRestraunt';
 import SpicyRestraunt from './SpicyRestraunt';
-
+import firestore from '@react-native-firebase/firestore';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+let userId = '';
 const HomePage = props => {
   const [showMenu, setShowMenu] = useState(false);
   const moveToRight = useRef(new Animated.Value(0)).current;
   const scale = useRef(new Animated.Value(1)).current;
+  const [items, setItems] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
+  const navigation = useNavigation();
+  const isFocused = useIsFocused();
+  useEffect(() => {
+    //const subscriber =
+    firestore()
+      .collection('items')
+      .get()
+      .then(querySnapshot => {
+        console.log('Total users: ', querySnapshot.size);
+        let tempData = [];
+        querySnapshot.forEach(documentSnapshot => {
+          console.log(
+            'User ID: ',
+            documentSnapshot.id,
+            documentSnapshot.data(),
+          );
+          tempData.push({
+            id: documentSnapshot.id,
+            data: documentSnapshot.data(),
+          });
+        });
+        setItems(tempData);
+      });
+    // Stop listening for updates when no longer required
+    // return () => subscriber();
+  }, []);
+
+  useEffect(() => {
+    getCartItems();
+  }, [isFocused]);
+  const getCartItems = async () => {
+    userId = await AsyncStorage.getItem('USERID');
+    const user = await firestore().collection('users').doc(userId).get();
+    setCartCount(user._data.cart.length);
+  };
+  const onAddToCart = async (item, index) => {
+    const user = await firestore().collection('users').doc(userId).get();
+    console.log(user._data.cart);
+    let tempDart = [];
+    tempDart = user._data.cart;
+    if (tempDart.length > 0) {
+      let existing = false;
+      tempDart.map(itm => {
+        if (itm.id == item.id) {
+          existing = true;
+          itm.data.qty = itm.data.qty + 1;
+        }
+      });
+      if (existing == false) {
+        tempDart.push(item);
+      }
+      firestore().collection('users').doc(userId).update({
+        cart: tempDart,
+      });
+    } else {
+      tempDart.push(item);
+    }
+    console.log(tempDart);
+    firestore().collection('users').doc(userId).update({
+      cart: tempDart,
+    });
+    getCartItems();
+  };
+
   return (
     <View style={{flex: 1}}>
       <Drawer />
@@ -42,19 +111,34 @@ const HomePage = props => {
         <View style={styles.bottom_Nav}>
           <View style={styles.bottomNav}>
             <Pressable onPress={() => props.navigation.navigate('Home Page')}>
-              <Image source={require('../images/home_.png')}  style={{height:24, width:24}} />
+              <Image
+                source={require('../images/home_.png')}
+                style={{height: 24, width: 24}}
+              />
             </Pressable>
             <Pressable>
-              <Image source={require('../images/search.png')} style={{height:24, width:24}} />
+              <Image
+                source={require('../images/search.png')}
+                style={{height: 24, width: 24}}
+              />
             </Pressable>
             <Pressable>
-              <Image source={require('../images/add.png')}  style={{height:24, width:24}} />
+              <Image
+                source={require('../images/add.png')}
+                style={{height: 24, width: 24}}
+              />
             </Pressable>
             <Pressable onPress={() => props.navigation.navigate('My Profile')}>
-              <Image source={require('../images/user.png')}  style={{height:24, width:24}} />
+              <Image
+                source={require('../images/user.png')}
+                style={{height: 24, width: 24}}
+              />
             </Pressable>
             <Pressable onPress={() => props.navigation.navigate('Favourite')}>
-              <Image source={require('../images/heart.png')} style={{height:24, width:24}}  />
+              <Image
+                source={require('../images/heart.png')}
+                style={{height: 24, width: 24}}
+              />
             </Pressable>
           </View>
         </View>
@@ -106,7 +190,7 @@ const HomePage = props => {
             showsVerticalScrollIndicator={false}
             vertical={true}
             style={{bottom: 97, position: 'relative'}}>
-            <Flashoffers />
+            {/* <Flashoffers />
             <OpenRestraunt />
             <RoseGarden />
             <CheesyRestraunt />
@@ -115,7 +199,48 @@ const HomePage = props => {
                 props.navigation.navigate('Details Of Spicy Restraunt')
               }>
               <SpicyRestraunt />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <View style={{marginTop: 40}}>
+              <FlatList
+                data={items}
+                renderItem={({item, index}) => {
+                  return (
+                    <View style={styles.itemView}>
+                      <Image
+                        source={{uri: item.data.imageUrl}}
+                        style={styles.itemImage}
+                      />
+                      <View style={styles.nameView}>
+                        <Text style={styles.nameText}>{item.data.name}</Text>
+                        <Text style={styles.descText}>
+                          {item.data.description}
+                        </Text>
+
+                        <View style={styles.priceView}>
+                          <Text style={styles.priceText}>
+                            {'Rs.' + item.data.discountPrice}
+                          </Text>
+                          <Text style={styles.discountText}>
+                            {'Rs.' + item.data.price}
+                          </Text>
+                        </View>
+                      </View>
+                      <Image
+                        source={require('../images/Plus.png')}
+                        style={{
+                          position: 'absolute',
+                          right: 0,
+                          margin: 9,
+                          bottom: 0,
+                          height: 40,
+                          width: 40,
+                        }}
+                      />
+                    </View>
+                  );
+                }}
+              />
+            </View>
           </ScrollView>
         </View>
       </Animated.View>
@@ -143,11 +268,10 @@ const styles = StyleSheet.create({
     backgroudColor: '#FFF',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    width: "92%",
+    width: '92%',
     height: 50,
     marginTop: 25,
-    marginHorizontal:15,
-
+    marginHorizontal: 15,
   },
   bottom_Nav: {
     position: 'absolute',
@@ -156,5 +280,55 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     alignContent: 'center',
     justifyContent: 'center',
+  },
+  itemView: {
+    flexDirection: 'row',
+    width: '100%',
+
+    backgroundColor: '#fff',
+    elevation: 4,
+    marginTop: 10,
+    borderRadius: 10,
+    height: 160,
+    marginBottom: 10,
+    position: 'relative',
+  },
+  itemImage: {
+    width: 120,
+    height: 150,
+    borderRadius: 10,
+    margin: 5,
+  },
+  nameView: {
+    width: '53%',
+    margin: 10,
+  },
+  priceView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  nameText: {
+    fontSize: 24,
+    fontWeight: '800',
+  },
+  descText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: 'red',
+  },
+  priceText: {
+    fontSize: 18,
+    color: 'green',
+    fontWeight: '700',
+  },
+  discountText: {
+    fontSize: 17,
+    fontWeight: '600',
+    textDecorationLine: 'line-through',
+    marginLeft: 5,
+  },
+  icon: {
+    width: 24,
+    height: 24,
   },
 });

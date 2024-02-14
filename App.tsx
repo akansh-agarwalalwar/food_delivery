@@ -110,7 +110,11 @@ export default function App(): React.JSX.Element {
 
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
-          {/* <Stack.Screen name = "Splash"  component= {Splash} /> */}
+          <Stack.Screen name = "Splash"  component= {Splash} />
+          <Stack.Screen name="Home" component={Main_page} />
+          <Stack.Screen name="SliderPage" component={SliderPage} />
+          <Stack.Screen name="SliderPage2" component={SliderPage2} />
+          <Stack.Screen name="SliderPage3" component={SliderPage3} />
           <Stack.Screen name="Login" component={Login_page} />
           <Stack.Screen name="Admin Login" component={AdminLogin} />
           <Stack.Screen name="Items" component={Items} />
