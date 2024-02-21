@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -22,7 +22,7 @@ const Splash = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Splash</Text>
+      <Image source={require('../../../components/images/logo.png')}></Image>
     </View>
   );
 };

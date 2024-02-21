@@ -8,11 +8,13 @@ const Flashoffers = () => {
       showsHorizontalScrollIndicator={false}
       style={{marginVertical: 50}}>
       <View style={styles.flashOFfers}>
+        <View style={{flexDirection:'row', position:'relative'}}>
         <Image source={require('../images/flash_offer.png')} />
         <Image
           source={require('../images/flash_offer2.png')}
           style={{marginLeft: 10}}
         />
+        </View>
       </View>
     </ScrollView>
   );
@@ -22,8 +24,6 @@ export default Flashoffers;
 
 const styles = StyleSheet.create({
   flashOFfers: {
-    flexDirection: 'row',
-
-    position: 'relative',
+  
   },
 });

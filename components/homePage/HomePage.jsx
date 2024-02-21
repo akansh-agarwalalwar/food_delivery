@@ -13,10 +13,10 @@ import React, {useRef, useState, useEffect} from 'react';
 import Drawer from './Drawer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Flashoffers from './Flashoffers';
-import OpenRestraunt from './OpenRestraunt';
-import RoseGarden from './RoseGarden';
-import CheesyRestraunt from './CheesyRestraunt';
-import SpicyRestraunt from './SpicyRestraunt';
+// import OpenRestraunt from './OpenRestraunt';
+// import RoseGarden from './RoseGarden';
+// import CheesyRestraunt from './CheesyRestraunt';
+// import SpicyRestraunt from './SpicyRestraunt';
 import firestore from '@react-native-firebase/firestore';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 let userId = '';
@@ -186,12 +186,13 @@ const HomePage = props => {
               <Text style={{fontWeight: 'bold'}}> Good Afternoon</Text>
             </Text>
           </View>
-          <ScrollView
+          {/* <ScrollView
             showsVerticalScrollIndicator={false}
             vertical={true}
-            style={{bottom: 97, position: 'relative'}}>
-            {/* <Flashoffers />
-            <OpenRestraunt />
+            style={{bottom: 97, position: 'relative'}}> */}
+            {/* <Flashoffers /> */}
+            
+            {/* <OpenRestraunt />
             <RoseGarden />
             <CheesyRestraunt />
             <TouchableOpacity
@@ -200,7 +201,7 @@ const HomePage = props => {
               }>
               <SpicyRestraunt />
             </TouchableOpacity> */}
-            <View style={{marginTop: 40}}>
+            <View style={{marginTop: 40, position:'relative'}}>
               <FlatList
                 data={items}
                 renderItem={({item, index}) => {
@@ -213,7 +214,7 @@ const HomePage = props => {
                       <View style={styles.nameView}>
                         <Text style={styles.nameText}>{item.data.name}</Text>
                         <Text style={styles.descText}>
-                          {item.data.description}
+                          {item.data.descryption}
                         </Text>
 
                         <View style={styles.priceView}>
@@ -225,23 +226,24 @@ const HomePage = props => {
                           </Text>
                         </View>
                       </View>
-                      <Image
-                        source={require('../images/Plus.png')}
-                        style={{
+                      <TouchableOpacity style={{
                           position: 'absolute',
                           right: 0,
                           margin: 9,
                           bottom: 0,
                           height: 40,
                           width: 40,
-                        }}
+                        }}>
+                      <Image
+                        source={require('../images/Plus.png')}
                       />
+                      </TouchableOpacity>
                     </View>
                   );
                 }}
               />
             </View>
-          </ScrollView>
+          {/* </ScrollView> */}
         </View>
       </Animated.View>
     </View>
@@ -312,9 +314,9 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
   descText: {
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: 'red',
+    color: 'black',
   },
   priceText: {
     fontSize: 18,
